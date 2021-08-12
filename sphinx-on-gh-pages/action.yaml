@@ -1,0 +1,16 @@
+name: Sphinx on GitHub Pages
+description: Build Sphinx docs and serve to GitHub Pages
+inputs:
+  commit-author:
+    default: GitHub Actions <actions@github.com>
+  commit-message:
+    default: Autobuild docs
+  build-branch:
+    default: master
+  sphinx-multiversion:
+    default: true
+runs:
+  using: composite
+  steps:
+  - run: ${{ github.actions_path }}/gh-pages.sh
+    shell: bash
