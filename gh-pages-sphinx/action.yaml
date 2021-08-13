@@ -1,16 +1,27 @@
 name: Sphinx on GitHub Pages
 description: Build Sphinx docs and serve to GitHub Pages
 inputs:
-  commit-author:
+  github_token:
+    description: Repository token (e.g., ${{ secrets.GITHUB_TOKEN }})
+    required: true
+  git-author:
+    description: Author and email of the Git commit
     default: GitHub Actions <actions@github.com>
   commit-message:
+    description: Message to use for the Git commit
     default: Autobuild docs
   build-branch:
+    description: Only this branch will trigger a build
     default: master
   sphinx-multiversion:
+    description: Whether to use sphinx-multiversion
     default: true
 runs:
   using: composite
   steps:
+  - run: ${{ github.actions_path }}/install.sh
+    shell: bash
   - run: ${{ github.actions_path }}/gh-pages.sh
     shell: bash
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
